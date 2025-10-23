@@ -44,4 +44,4 @@ jobs:
 
           push: true
 
-          tags: dadoxx/FitnesAP:latest
+          tags: dadoxx/fitnesapdemo:latest, dadoxx/fitnesapdemo:${{ github.sha }}
