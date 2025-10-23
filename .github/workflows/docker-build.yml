@@ -44,4 +44,4 @@ jobs:
 
           push: true
 
-          tags: uporabnisko_ime/ime_slike:latest
+          tags: dadoxx/FitnesAP:latest
