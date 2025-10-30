@@ -47,7 +47,7 @@ jobs:
           tags: dadoxx/fitnesapdemo:latest, dadoxx/fitnesapdemo:${{ github.sha }}
 
       - name: Publish
-        run: dotnet publish --configuration Release --no build --output "${{ github.workspace }}/publish"
+        run: dotnet publish --configuration Release --no-build --output "${{ github.workspace }}/publish"
 
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v2
