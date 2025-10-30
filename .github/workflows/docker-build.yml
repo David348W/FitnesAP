@@ -47,8 +47,8 @@ jobs:
           tags: dadoxx/fitnesapdemo:latest, dadoxx/fitnesapdemo:${{ github.sha }}
 
       - name: Publish
-        run: dotnet restore ./FitnesAP/FitnesAP.csproj
-             dotnet publish ./FitnesAP/FitnesAP.csproj --configuration Release --output "/home/runner/work/FitnesAP/FitnesAP/publish"
+        run: dotnet publish --configuration Release --no-build --output "/home/runner/work/FitnesAP/FitnesAP/publish"
+
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v2
         with:
