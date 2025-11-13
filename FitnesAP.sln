@@ -12,6 +12,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{
 		docker-build.yml = docker-build.yml
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FitnesAp_Tests", "FitnesAp_Tests\FitnesAp_Tests.csproj", "{A1C205F6-747C-4104-8D41-CBFA1919598D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -22,6 +24,10 @@ Global
 		{F69DAEDD-4D56-4735-BB2E-A29F7BCA06EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F69DAEDD-4D56-4735-BB2E-A29F7BCA06EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F69DAEDD-4D56-4735-BB2E-A29F7BCA06EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1C205F6-747C-4104-8D41-CBFA1919598D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1C205F6-747C-4104-8D41-CBFA1919598D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1C205F6-747C-4104-8D41-CBFA1919598D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1C205F6-747C-4104-8D41-CBFA1919598D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
