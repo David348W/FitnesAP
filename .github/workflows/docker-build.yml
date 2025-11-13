@@ -32,7 +32,7 @@ jobs:
         uses: docker/setup-buildx-action@v1
 
       - name: Test 
-        run: dotnet test --no-restore --logger:trx
+        run: dotnet test FitnesAp_Tests/FitnesAp_Tests.csproj --logger "trx;LogFileName=test-results.trx"
 
       - name: Save test results as artifact
         uses: dorny/test-reporter@v1
