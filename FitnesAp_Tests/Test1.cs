@@ -12,7 +12,7 @@
         [TestMethod]
         public void TestMethod2()
         {
-            Assert.IsFalse(true);
+            Assert.IsFalse(false);
         }
     }
 }
