@@ -1,0 +1,41 @@
+﻿@page
+@model FitnesAP.Pages.ProfileModel
+@{
+    ViewData["Title"] = "Moj Profil";
+}
+
+<div class="container mt-5">
+    <h2>Urejanje Profila</h2>
+    @if (!string.IsNullOrEmpty(Model.Sporocilo))
+    {
+        <div class="alert alert-success">@Model.Sporocilo</div>
+    }
+
+    <form method="post">
+        <input type="hidden" asp-for="TrenutniUser.Id" />
+        <input type="hidden" asp-for="TrenutniUser.Username" />
+        <input type="hidden" asp-for="TrenutniUser.Password" />
+
+        <div class="mb-3">
+            <label>Uporabniško ime</label>
+            <input type="text" class="form-control" asp-for="TrenutniUser.Username" disabled />
+        </div>
+
+        <div class="mb-3">
+            <label>Ime</label>
+            <input type="text" class="form-control" asp-for="TrenutniUser.Ime" />
+        </div>
+
+        <div class="mb-3">
+            <label>Priimek</label>
+            <input type="text" class="form-control" asp-for="TrenutniUser.Priimek" />
+        </div>
+
+        <div class="mb-3">
+            <label>Email</label>
+            <input type="email" class="form-control" asp-for="TrenutniUser.Email" />
+        </div>
+
+        <button type="submit" class="btn btn-primary">Shrani</button>
+    </form>
+</div>

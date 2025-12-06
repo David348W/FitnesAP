@@ -40,9 +40,9 @@
                         {
                             <!-- JE prijavljen -->
                             <li class="nav-item">
-                                <span class="nav-link text-dark">
+                                <a class="nav-link text-dark" asp-page="/Profile">
                                     Welcome, @Context.Session.GetString("username")!
-                                </span>
+                                </a>
                             </li>
 
                             @if (Context.Session.GetString("role") == "Admin")

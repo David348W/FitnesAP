@@ -3,12 +3,18 @@
     "Id": 1,
     "Username": "admin",
     "Password": "test123",
-    "Role": "Admin"
+    "Role": "Admin",
+    "Ime": "David",
+    "Priimek": "Majcen",
+    "Email": "david.majcen2@student.um.si"
   },
   {
     "Id": 2,
     "Username": "Uporabnik",
     "Password": "geslo123",
-    "Role": "User"
+    "Role": "User",
+    "Ime": null,
+    "Priimek": null,
+    "Email": null
   }
 ]
