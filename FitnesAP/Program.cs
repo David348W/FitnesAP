@@ -10,7 +10,7 @@ builder.Services.AddSession(options =>
 });
 
 builder.Services.AddSingleton<FitnesAP.Data.UserService>();
-
+builder.Services.AddScoped<FitnesAP.Data.ExerciseService>();
 var app = builder.Build();
 
 app.UseHttpsRedirection();

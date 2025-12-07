@@ -1,7 +1,7 @@
 [
   {
     "Id": 1,
-    "Username": "admin",
+    "Username": "Admin",
     "Password": "test123",
     "Role": "Admin",
     "Ime": "David",

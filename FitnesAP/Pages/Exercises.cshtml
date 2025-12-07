@@ -1,0 +1,72 @@
+﻿
+@page
+@model FitnesAP.Pages.ExercisesModel
+@{
+
+    ViewData["Title"] = "Vaje";
+}
+
+<div class="container mt-4">
+    <h2 class="mb-4">Seznam vseh vaj</h2>
+
+    @if (Model.IsAdmin)
+    {
+        <div class="card mb-5 border-primary">
+            <div class="card-header bg-primary text-white">
+                Dodaj Novo Vajo (Samo za Admina)
+            </div>
+            <div class="card-body">
+                <form method="post" enctype="multipart/form-data">
+                    <div class="row">
+                        <div class="col-md-3 mb-2">
+                            <label>Ime vaje</label>
+                            <input asp-for="NovaVaja.Ime" class="form-control" required placeholder="npr. Počep" />
+                        </div>
+
+                        <div class="col-md-3 mb-2">
+                            <label>Naloži Sliko</label>
+                            <input type="file" asp-for="SlikaUpload" class="form-control" accept="image/*" />
+                        </div>
+
+                        <div class="col-md-3 mb-2">
+                            <label>Video (Youtube URL)</label>
+                            <input asp-for="NovaVaja.VideoUrl" class="form-control" placeholder="https://youtube.com..." />
+                        </div>
+
+                        <div class="col-md-3 mb-2 d-flex align-items-end">
+                            <button type="submit" class="btn btn-success w-100">➕ Dodaj</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    }
+
+    <div class="row">
+        @foreach (var vaja in Model.VseVaje)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow-sm">
+                    @if (!string.IsNullOrEmpty(vaja.SlikaUrl))
+                    {
+                        <img src="@vaja.SlikaUrl" class="card-img-top" alt="@vaja.Ime" style="height: 200px; object-fit: cover;">
+                    }
+                    else
+                    {
+                        <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
+                            <span class="text-muted">Ni slike</span>
+                        </div>
+                    }
+
+                    <div class="card-body">
+                        <h5 class="card-title">@vaja.Ime</h5>
+                        @if (!string.IsNullOrEmpty(vaja.VideoUrl))
+                        {
+                            <a href="@vaja.VideoUrl" target="_blank" class="btn btn-outline-danger btn-sm">▶ Poglej Video</a>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
