@@ -16,5 +16,14 @@
     "Ime": null,
     "Priimek": null,
     "Email": null
+  },
+  {
+    "Id": 3,
+    "Username": "David",
+    "Password": "Majcen",
+    "Role": "User",
+    "Ime": "David",
+    "Priimek": "Majcen",
+    "Email": "Dmajcen@gmail.com"
   }
 ]
