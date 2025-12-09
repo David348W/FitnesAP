@@ -1,0 +1,42 @@
+﻿@page
+@model FitnesAP.Pages.CreateWorkoutModel
+@{
+    ViewData["Title"] = "Nov Trening";
+}
+
+<div class="container mt-4">
+    <h2>Ustvari nov trening</h2>
+
+    <form method="post">
+        <div class="mb-4">
+            <label class="form-label">Poimenuj trening:</label>
+            <input type="text" class="form-control" asp-for="WorkoutName" placeholder="Npr. Push Day - Težek" required />
+        </div>
+
+        <h4>Izberi vaje:</h4>
+        <div class="card p-3">
+            @if (Model.AllExercises.Count == 0)
+            {
+                <p>Ni vaj na voljo. <a asp-page="/Trening">Dodaj novo vajo</a>.</p>
+            }
+            else
+            {
+                <div class="row">
+                    @foreach (var vaja in Model.AllExercises)
+                    {
+                        <div class="col-md-4 mb-2">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="SelectedExerciseIds" value="@vaja.Id" id="vaja_@vaja.Id">
+                                <label class="form-check-label" for="vaja_@vaja.Id">
+                                    <strong>@vaja.Ime</strong>
+                                </label>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+
+        <button type="submit" class="btn btn-success mt-4 btn-lg">Shrani Trening</button>
+    </form>
+</div>

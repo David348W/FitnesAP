@@ -22,9 +22,6 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-page="/Index">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-page="/Privacy">Privacy</a>
-                        </li>
 
                         @if (Context.Session.GetString("username") == null)
                         {
@@ -46,6 +43,9 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-page="/Exercises">Vaje</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-page="/MyWorkouts">Trening</a>
                             </li>
                             @if (Context.Session.GetString("role") == "Admin")
                             {
