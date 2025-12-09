@@ -1,13 +1,11 @@
-﻿// Datoteka: Pages/CreateWorkout.cshtml.cs
-using FitnesAP.data;
-using FitnesAP.Data; // Pazi na velike/male črke pri 'Data'
+﻿using FitnesAP.data;
+using FitnesAP.Data;
 using FitnesAP.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace FitnesAP.Pages
 {
-    // 1. SPREMEMBA: Ime razreda
     public class CreateWorkoutModel : PageModel
     {
         private readonly ExerciseService _exerciseService;
@@ -49,7 +47,7 @@ namespace FitnesAP.Pages
             if (string.IsNullOrEmpty(WorkoutName) || SelectedExerciseIds.Count == 0)
             {
                 AllExercises = _exerciseService.GetExercises();
-                ModelState.AddModelError("", "Prosim vpiši ime in izberi vaje.");
+                ModelState.AddModelError("", "Izberi vsaj eno vajo in vpiši ime.");
                 return Page();
             }
 
@@ -57,19 +55,33 @@ namespace FitnesAP.Pages
             {
                 UserId = user.Id,
                 Name = WorkoutName,
-                Exercises = new List<Exercise>()
+                // TUKAJ JE KLJUČ: Uporabljamo WorkoutExercise
+                Exercises = new List<WorkoutExercise>()
             };
 
             var allExercises = _exerciseService.GetExercises();
+
             foreach (var id in SelectedExerciseIds)
             {
                 var exercise = allExercises.FirstOrDefault(e => e.Id == id);
-                if (exercise != null) newWorkout.Exercises.Add(exercise);
+                if (exercise != null)
+                {
+                    // Ustvarimo vajo z ENIM privzetim setom
+                    var workoutExercise = new WorkoutExercise
+                    {
+                        ExerciseId = exercise.Id,
+                        Name = exercise.Ime, // Preveri če imaš v Exercise modelu 'Name' ali 'Ime'
+                        Sets = new List<WorkoutSet>
+                        {
+                            new WorkoutSet { Id = 1, Weight = 0, Reps = 0 }
+                        }
+                    };
+                    newWorkout.Exercises.Add(workoutExercise);
+                }
             }
 
             _workoutService.AddWorkout(newWorkout);
 
-            // 2. SPREMEMBA: Preusmeritev nazaj na nov seznam
             return RedirectToPage("/MyWorkouts");
         }
     }

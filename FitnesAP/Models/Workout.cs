@@ -6,10 +6,13 @@ namespace FitnesAP.Models
     public class Workout
     {
         public int Id { get; set; }
-        public int UserId { get; set; } // Kdo je naredil trening
-        public string Name { get; set; } // Npr. "Push Day
+        public int UserId { get; set; }
+        public string Name { get; set; }
 
-        // Seznam vaj, ki so v tem treningu
-        public List<Exercise> Exercises { get; set; } = new List<Exercise>();
+        // --- NOVO: Kdaj smo pritisnili gumb začni ---
+        public DateTime? StartTime { get; set; }
+        public DateTime? EndTime { get; set; }
+
+        public List<WorkoutExercise> Exercises { get; set; } = new List<WorkoutExercise>();
     }
 }

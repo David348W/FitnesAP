@@ -72,5 +72,32 @@ namespace FitnesAP.data
                 File.WriteAllText(_path, newJson);
             }
         }
+
+        public void UpdateWorkout(Workout updatedWorkout)
+        {
+            if (!File.Exists(_path)) return;
+
+            var json = File.ReadAllText(_path);
+            var workouts = JsonSerializer.Deserialize<List<Workout>>(json) ?? new List<Workout>();
+
+            // Poiščemo starega in ga zamenjamo z novim
+            var existingIndex = workouts.FindIndex(w => w.Id == updatedWorkout.Id);
+            if (existingIndex != -1)
+            {
+                workouts[existingIndex] = updatedWorkout;
+
+                var newJson = JsonSerializer.Serialize(workouts, new JsonSerializerOptions { WriteIndented = true });
+                File.WriteAllText(_path, newJson);
+            }
+        }
+
+        // Prav tako potrebujemo metodo GetWorkoutById za nalaganje posameznega treninga
+        public Workout? GetWorkoutById(int id)
+        {
+            if (!File.Exists(_path)) return null;
+            var json = File.ReadAllText(_path);
+            var workouts = JsonSerializer.Deserialize<List<Workout>>(json) ?? new List<Workout>();
+            return workouts.FirstOrDefault(w => w.Id == id);
+        }
     }
 }

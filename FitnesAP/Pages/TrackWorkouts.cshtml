@@ -1,0 +1,162 @@
+﻿@page "{id:int}"
+@model FitnesAP.Pages.TrackWorkoutModel
+@{
+    ViewData["Title"] = "Izvajanje Treninga";
+}
+
+<form method="post">
+    <input type="hidden" asp-for="CurrentWorkout.Id" />
+    <input type="hidden" asp-for="CurrentWorkout.UserId" />
+    <input type="hidden" asp-for="CurrentWorkout.Name" />
+    <input type="hidden" asp-for="CurrentWorkout.StartTime" />
+
+    <div class="d-flex justify-content-between align-items-center mb-4 sticky-top bg-white py-3 border-bottom" style="z-index: 100;">
+        <div>
+            <h2 class="m-0">@Model.CurrentWorkout.Name</h2>
+            <div class="text-muted fw-bold fs-4" id="workoutTimer">00:00</div>
+        </div>
+
+        <div>
+            @if (Model.CurrentWorkout.StartTime == null)
+            {
+                <button type="submit" asp-page-handler="StartTimer" class="btn btn-primary btn-lg">
+                    ▶ Začni
+                </button>
+            }
+            else
+            {
+                <button type="submit" class="btn btn-success btn-lg">
+                    ✔ Zaključi
+                </button>
+            }
+        </div>
+    </div>
+
+    <div class="row">
+        @if (Model.CurrentWorkout.Exercises.Count == 0)
+        {
+            <div class="alert alert-warning">
+                Ta trening nima shranjenih vaj! Preveri CreateWorkout.
+            </div>
+        }
+
+        @for (int i = 0; i < Model.CurrentWorkout.Exercises.Count; i++)
+        {
+            <div class="col-12 mb-4">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                        <h4 class="m-0">@Model.CurrentWorkout.Exercises[i].Name</h4>
+
+                        <input type="hidden" asp-for="CurrentWorkout.Exercises[i].ExerciseId" />
+                        <input type="hidden" asp-for="CurrentWorkout.Exercises[i].Name" />
+                    </div>
+
+                    <div class="card-body p-0">
+                        <table class="table table-striped mb-0 text-center align-middle">
+                            <thead class="table-light">
+                                <tr>
+                                    <th style="width: 50px;">#</th>
+                                    <th>Teža (kg)</th>
+                                    <th>Ponovitve</th>
+                                    <th style="width: 50px;">Briši</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @for (int j = 0; j < Model.CurrentWorkout.Exercises[i].Sets.Count; j++)
+                                {
+                                    <tr>
+                                        <td>
+                                            <strong>@(j + 1)</strong>
+                                            <input type="hidden" asp-for="CurrentWorkout.Exercises[i].Sets[j].Id" />
+                                        </td>
+                                        <td>
+                                            <input type="number" step="0.5" class="form-control"
+                                                   asp-for="CurrentWorkout.Exercises[i].Sets[j].Weight" placeholder="0" />
+                                        </td>
+                                        <td>
+                                            <input type="number" class="form-control"
+                                                   asp-for="CurrentWorkout.Exercises[i].Sets[j].Reps" placeholder="0" />
+                                        </td>
+                                        <td>
+                                            <button type="submit"
+                                                    asp-page-handler="RemoveSet"
+                                                    asp-route-exerciseIndex="@i"
+                                                    asp-route-setIndex="@j"
+                                                    class="btn btn-danger btn-sm">
+                                                X
+                                            </button>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+
+                        <div class="p-2 text-center border-top">
+                            <button type="submit"
+                                    asp-page-handler="AddSet"
+                                    asp-route-exerciseIndex="@i"
+                                    class="btn btn-outline-primary w-100">
+                                + Dodaj Set
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</form>
+
+<script>
+    // Preberemo začetek in konec
+    var startTimeString = "@Model.CurrentWorkout.StartTime?.ToString("yyyy-MM-ddTHH:mm:ss")";
+    var endTimeString = "@Model.CurrentWorkout.EndTime?.ToString("yyyy-MM-ddTHH:mm:ss")";
+
+    function updateTimer() {
+        var timerElement = document.getElementById("workoutTimer");
+
+        if (!startTimeString) {
+            if(timerElement) timerElement.innerText = "00:00";
+            return;
+        }
+
+        var startTime = new Date(startTimeString);
+        var now;
+
+        // --- GLAVNA SPREMEMBA ---
+        // Če imamo EndTime (trening zaključen), uporabimo tisti čas namesto "zdaj"
+        if (endTimeString) {
+            now = new Date(endTimeString);
+        } else {
+            now = new Date(); // Če trening še teče, vzemi trenutni čas
+        }
+
+        var diff = now - startTime;
+
+        if (diff < 0) diff = 0;
+
+        var seconds = Math.floor((diff / 1000) % 60);
+        var minutes = Math.floor((diff / (1000 * 60)) % 60);
+        var hours = Math.floor((diff / (1000 * 60 * 60)));
+
+        var s = seconds < 10 ? "0" + seconds : seconds;
+        var m = minutes < 10 ? "0" + minutes : minutes;
+        var h = hours < 10 ? "0" + hours : hours;
+
+        if(timerElement) {
+            if (hours > 0) {
+                timerElement.innerText = h + ":" + m + ":" + s;
+            } else {
+                timerElement.innerText = m + ":" + s;
+            }
+        }
+    }
+
+    // Zaženi logiko
+    updateTimer();
+
+    // Interval (tiktakanje) zaženemo SAMO, če trening NI končan (nima EndTime)
+    if (startTimeString && !endTimeString) {
+        setInterval(updateTimer, 1000);
+    }
+</script>
