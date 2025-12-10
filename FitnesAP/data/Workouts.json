@@ -2,9 +2,29 @@
   {
     "Id": 1,
     "UserId": 3,
-    "Name": "Stange",
-    "StartTime": "2025-12-09T14:23:06",
-    "EndTime": null,
+    "Name": "BENCH",
+    "StartTime": "2025-12-10T16:05:28.994433+01:00",
+    "EndTime": "2025-12-10T16:05:28.994437+01:00",
+    "Exercises": [
+      {
+        "ExerciseId": 2,
+        "Name": "Bench Press",
+        "Sets": [
+          {
+            "Id": 1,
+            "Weight": 30,
+            "Reps": 0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "Id": 2,
+    "UserId": 3,
+    "Name": "sssss",
+    "StartTime": "2025-12-10T16:12:12.3605122+01:00",
+    "EndTime": "2025-12-10T16:12:18.9062247+01:00",
     "Exercises": [
       {
         "ExerciseId": 1,
@@ -14,6 +34,36 @@
             "Id": 1,
             "Weight": 0,
             "Reps": 0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "Id": 3,
+    "UserId": 3,
+    "Name": "Triceps",
+    "StartTime": "2025-12-10T16:13:33",
+    "EndTime": "2025-12-10T16:13:52.7077298+01:00",
+    "Exercises": [
+      {
+        "ExerciseId": 3,
+        "Name": "Tricep rope pushdown",
+        "Sets": [
+          {
+            "Id": 1,
+            "Weight": 30,
+            "Reps": 23
+          },
+          {
+            "Id": 2,
+            "Weight": 15,
+            "Reps": 9
+          },
+          {
+            "Id": 3,
+            "Weight": 100,
+            "Reps": 1
           }
         ]
       }

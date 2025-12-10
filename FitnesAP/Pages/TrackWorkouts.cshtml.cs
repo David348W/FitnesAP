@@ -1,4 +1,4 @@
-using FitnesAP.data;
+ï»¿using FitnesAP.data;
 using FitnesAP.Data;
 using FitnesAP.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -30,29 +30,45 @@ namespace FitnesAP.Pages
             return Page();
         }
 
-        // Glavni gumb "Zakljuèi trening"
+        // Glavni gumb "ZakljuÃ¨i trening"
         public IActionResult OnPost()
         {
-            if (CurrentWorkout != null)
+            // Varnostno preverjanje
+            var username = HttpContext.Session.GetString("username");
+            if (string.IsNullOrEmpty(username)) return RedirectToPage("/Login");
+
+            var dbWorkout = _workoutService.GetWorkoutById(CurrentWorkout.Id);
+
+            if (dbWorkout != null)
             {
-                _workoutService.UpdateWorkout(CurrentWorkout);
-                CurrentWorkout.StartTime = DateTime.Now;
-                if (CurrentWorkout.EndTime == null)
+                // 3. Posodobimo podatke, ki jih je uporabnik vpisal (teÅ¾e, ponovitve)
+                // Kopiramo iz CurrentWorkout (forma) v dbWorkout (baza)
+                dbWorkout.Exercises = CurrentWorkout.Exercises;
+
+                // 4. GLAVNI KORAK: ÄŒe EndTime Å¡e ni nastavljen, ga nastavimo ZDAJ.
+                if (dbWorkout.EndTime == null)
                 {
-                    CurrentWorkout.EndTime = DateTime.Now;
+                    dbWorkout.EndTime = DateTime.Now;
                 }
+
+                // 5. Shranimo v JSON
+                _workoutService.UpdateWorkout(dbWorkout);
+
+                // Posodobimo model za prikaz, da bo JavaScript takoj videl spremembo
+                CurrentWorkout = dbWorkout;
             }
+
             return RedirectToPage("/MyWorkouts");
         }
 
-        // --- NOVA METODA: Doda set doloèeni vaji ---
+        // --- NOVA METODA: Doda set doloÃ¨eni vaji ---
         // Uporabimo indeks vaje (exerciseIndex), da vemo, kateri vaji v seznamu dodati set
         public IActionResult OnPostAddSet(int exerciseIndex)
         {
-            // Ker imamo [BindProperty], je CurrentWorkout že napolnjen s podatki iz forme
+            // Ker imamo [BindProperty], je CurrentWorkout Å¾e napolnjen s podatki iz forme
             var exercise = CurrentWorkout.Exercises[exerciseIndex];
 
-            // Doloèimo nov ID seta (max obstojeè + 1)
+            // DoloÃ¨imo nov ID seta (max obstojeÃ¨ + 1)
             int newSetId = exercise.Sets.Count > 0 ? exercise.Sets.Max(s => s.Id) + 1 : 1;
 
             exercise.Sets.Add(new WorkoutSet
@@ -65,7 +81,7 @@ namespace FitnesAP.Pages
             // Shranimo spremembe (tudi vpisane kile se shranijo)
             _workoutService.UpdateWorkout(CurrentWorkout);
 
-            // Osvežimo stran (ohranimo ID treninga v URL-ju)
+            // OsveÅ¾imo stran (ohranimo ID treninga v URL-ju)
             return RedirectToPage(new { id = CurrentWorkout.Id });
         }
 
@@ -74,7 +90,7 @@ namespace FitnesAP.Pages
         {
             var exercise = CurrentWorkout.Exercises[exerciseIndex];
 
-            // Odstranimo set na doloèenem indeksu
+            // Odstranimo set na doloÃ¨enem indeksu
             if (setIndex >= 0 && setIndex < exercise.Sets.Count)
             {
                 exercise.Sets.RemoveAt(setIndex);
@@ -88,14 +104,14 @@ namespace FitnesAP.Pages
 
         public IActionResult OnPostStartTimer()
         {
-            // Èe StartTime še ni nastavljen, ga nastavimo na zdaj
+            // Ãˆe StartTime Å¡e ni nastavljen, ga nastavimo na zdaj
             if (CurrentWorkout.StartTime == null)
             {
                 CurrentWorkout.StartTime = DateTime.Now;
                 _workoutService.UpdateWorkout(CurrentWorkout);
             }
 
-            // Osvežimo stran
+            // OsveÅ¾imo stran
             return RedirectToPage(new { id = CurrentWorkout.Id });
         }
     }
