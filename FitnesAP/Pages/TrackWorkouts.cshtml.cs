@@ -49,6 +49,7 @@ namespace FitnesAP.Pages
                 if (dbWorkout.EndTime == null)
                 {
                     dbWorkout.EndTime = DateTime.Now;
+                    dbWorkout.StartTime = null;
                 }
 
                 // 5. Shranimo v JSON

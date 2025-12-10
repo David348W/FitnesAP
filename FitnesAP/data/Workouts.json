@@ -1,1 +1,22 @@
-[]
+[
+  {
+    "Id": 1,
+    "UserId": 3,
+    "Name": "pullupam",
+    "StartTime": null,
+    "EndTime": "2025-12-10T22:11:35.6248095+01:00",
+    "Exercises": [
+      {
+        "ExerciseId": 1,
+        "Name": "Pull ups",
+        "Sets": [
+          {
+            "Id": 1,
+            "Weight": 0,
+            "Reps": 0
+          }
+        ]
+      }
+    ]
+  }
+]
