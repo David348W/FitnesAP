@@ -9,7 +9,7 @@ namespace FitnesAP.Models
         public int UserId { get; set; }
         public string Name { get; set; }
 
-        // --- NOVO: Kdaj smo pritisnili gumb začni ---
+        public DateTime Date { get; set; } = DateTime.Now;
         public DateTime? StartTime { get; set; }
         public DateTime? EndTime { get; set; }
 

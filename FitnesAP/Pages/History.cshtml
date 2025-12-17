@@ -1,0 +1,71 @@
+﻿@page
+@model FitnesAP.Pages.HistoryModel
+@{
+    ViewData["Title"] = "Zgodovina Treningov";
+}
+
+<div class="container mt-4">
+    <h1 class="mb-4">Zgodovina Treningov</h1>
+
+    @if (Model.CompletedWorkouts.Count == 0)
+    {
+        <div class="alert alert-info">
+            Nimaš še zaključenih treningov. Pojdi na <a asp-page="/MyWorkouts">Moji Treningi</a> in začni enega!
+        </div>
+    }
+    else
+    {
+        <div class="row">
+            @foreach (var workout in Model.CompletedWorkouts)
+            {
+                <div class="col-12 mb-4">
+                    <div class="card shadow-sm border-0">
+                        <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+                            <div>
+                                <h4 class="m-0 text-white">@workout.Name</h4>
+                                <small class="text-white-50">@workout.Date.ToLongDateString()</small>
+                            </div>
+                            <div class="text-end">
+                                @if (workout.StartTime != null && workout.EndTime != null)
+                                {                                   
+                                    var trajanje = workout.EndTime.Value - workout.StartTime.Value;
+                                    <span class="badge bg-primary fs-6">
+                                        ⏱ @trajanje.ToString(@"hh\:mm")
+                                    </span>
+                                }
+                            </div>
+                        </div>
+
+                        <div class="card-body">
+                            @foreach (var exercise in workout.Exercises)
+                            {
+                                <div class="mb-3 border-bottom pb-2">
+                                    <h5 class="text-primary mb-2">@exercise.Name</h5>
+
+                                    <div class="d-flex flex-wrap gap-2">
+                                        @foreach (var set in exercise.Sets)
+                                        {                                         
+                                            if (set.Weight > 0 || set.Reps > 0)
+                                            {
+                                                <div class="badge bg-light text-dark border p-2">
+                                                    <span class="fw-bold">@set.Weight kg</span>
+                                                    <span class="text-muted">x</span>
+                                                    <span>@set.Reps</span>
+                                                </div>
+                                            }
+                                        }
+
+                                        @if (exercise.Sets.All(s => s.Weight == 0 && s.Reps == 0))
+                                        {
+                                            <small class="text-muted">Ni vpisane teže/ponovitev.</small>
+                                        }
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>

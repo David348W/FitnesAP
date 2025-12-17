@@ -115,5 +115,58 @@ namespace FitnesAp_Tests
             var result = _service.GetWorkoutById(999);
             Assert.IsNull(result, "Če ID ne obstaja, mora vrniti null.");
         }
+        [TestMethod]
+        public void DodajTrening_ShraniDatum()
+        {
+            var datum = new DateTime(2025, 12, 25);
+            var trening = new Workout
+            {
+                UserId = 1,
+                Name = "Božični Trening",
+                Date = datum 
+            };
+
+            _service.AddWorkout(trening);
+
+            var shranjen = _service.GetWorkoutsForUser(1).First();
+            Assert.AreEqual(datum, shranjen.Date, "Datum treninga se mora pravilno shraniti.");
+        }
+
+        [TestMethod]
+        public void UpdateWorkout_ShraniEndTime_ZaZgodovino()
+        {         
+            var trening = new Workout { UserId = 1, Name = "Test Timer" };
+            _service.AddWorkout(trening);
+            var id = _service.GetWorkoutsForUser(1).First().Id;
+          
+            var nalozen = _service.GetWorkoutById(id);
+            nalozen.StartTime = DateTime.Now.AddMinutes(-60); 
+            nalozen.EndTime = DateTime.Now;                  
+          
+            _service.UpdateWorkout(nalozen);
+    
+            var koncni = _service.GetWorkoutById(id);
+            Assert.IsNotNull(koncni.StartTime);
+            Assert.IsNotNull(koncni.EndTime);
+            Assert.IsTrue(koncni.EndTime > koncni.StartTime, "Konec mora biti kasneje kot začetek.");
+        }
+
+        [TestMethod]
+        public void FiltriranjeZgodovine_Logika()
+        {
+                     
+            var w1 = new Workout { UserId = 1, Name = "Končan", EndTime = DateTime.Now };       
+            var w2 = new Workout { UserId = 1, Name = "V teku", EndTime = null };
+
+            _service.AddWorkout(w1);
+            _service.AddWorkout(w2);
+
+            var vsi = _service.GetWorkoutsForUser(1);       
+            var zgodovina = vsi.Where(w => w.EndTime != null).ToList();
+
+            Assert.AreEqual(1, zgodovina.Count, "Zgodovina mora pokazati samo 1 trening.");
+            Assert.AreEqual("Končan", zgodovina[0].Name);
+        }
     }
 }
+    
