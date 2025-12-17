@@ -1,0 +1,58 @@
+﻿@page
+@model FitnesAP.Pages.BodyStatsModel
+@{
+    ViewData["Title"] = "Telesne Meritve";
+}
+
+<div class="container mt-4" style="max-width: 600px;">
+    <h2 class="mb-4">🏋️‍♂️ Moji Telesni Podatki</h2>
+
+    @if (!string.IsNullOrEmpty(Model.Sporocilo))
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @Model.Sporocilo
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <form method="post">
+
+                <div class="mb-4">
+                    <label class="form-label fw-bold">Trenutna Teža (kg)</label>
+                    <div class="input-group">
+                        <input type="number" step="0.1" min="0" max="500" class="form-control" asp-for="InputTeza" placeholder="npr. 80,5" />
+                        <span class="input-group-text">kg</span>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label fw-bold">Višina (cm)</label>
+                    <div class="input-group">
+                        <input type="number" min="0" max="300" class="form-control" asp-for="InputVisina" placeholder="npr. 180" />
+                        <span class="input-group-text">cm</span>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label fw-bold">Datum Rojstva</label>
+                    <input type="date" class="form-control" asp-for="InputDatumRojstva" />
+
+                    @if (Model.TrenutnaStarost != null)
+                    {
+                        <div class="mt-2 p-2 bg-light border rounded text-center">
+                            Starost: <strong>@Model.TrenutnaStarost let</strong>
+                        </div>
+                    }
+                </div>
+
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-primary btn-lg">Shrani Podatke</button>
+                    <a asp-page="/Profile" class="btn btn-outline-secondary">Nazaj na Profil</a>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>

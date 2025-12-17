@@ -91,8 +91,10 @@ namespace FitnesAP.Data
                 existingUser.Ime = userToUpdate.Ime;
                 existingUser.Priimek = userToUpdate.Priimek;
                 existingUser.Email = userToUpdate.Email;
+                existingUser.Teza = userToUpdate.Teza;
+                existingUser.Visina = userToUpdate.Visina;
+                existingUser.DatumRojstva = userToUpdate.DatumRojstva;
 
-                
                 if (!string.IsNullOrEmpty(userToUpdate.Password))
                 {
                     existingUser.Password = userToUpdate.Password;

@@ -68,5 +68,45 @@ namespace FitnesAp_Tests
             var updatedUser = _service.GetUserByUsername("Marko");            
             Assert.AreEqual("SpremenjenoIme", updatedUser.Ime);
         }
+        [TestMethod]
+        public void ShraniTelesnePodatke_Pravilno()
+        {            
+            _service.Register("FitnesFan", "geslo123");
+            var user = _service.GetUserByUsername("FitnesFan");
+            
+            user.Teza = 85.5;
+            user.Visina = 182;
+            user.DatumRojstva = new DateTime(1995, 5, 20);
+    
+            _service.UpdateUser(user);
+          
+            var posodobljenUser = _service.GetUserByUsername("FitnesFan");
+
+            Assert.AreEqual(85.5, posodobljenUser.Teza, "Teža se mora ujemati.");
+            Assert.AreEqual(182, posodobljenUser.Visina, "Višina se mora ujemati.");
+            Assert.IsNotNull(posodobljenUser.DatumRojstva, "Datum rojstva ne sme biti null.");
+        }
+
+        [TestMethod]
+        public void IzracunStarosti_Deluje()
+        {
+           
+            var user = new User();          
+            user.DatumRojstva = new DateTime(2000, 1, 1);         
+            int pricakovanaStarost = DateTime.Now.Year - 2000;
+          
+            if (DateTime.Now < new DateTime(DateTime.Now.Year, 1, 1)) pricakovanaStarost--;
+
+            Assert.AreEqual(pricakovanaStarost, user.Starost, "Starost mora biti pravilno izračunana glede na letnico.");
+        }
+
+        [TestMethod]
+        public void IzracunStarosti_VracaNull_CeNiDatuma()
+        {
+            var user = new User();
+            user.DatumRojstva = null;
+
+            Assert.IsNull(user.Starost, "Če ni datuma rojstva, mora biti starost null.");
+        }
     }
 }

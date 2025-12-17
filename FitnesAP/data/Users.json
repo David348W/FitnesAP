@@ -6,7 +6,11 @@
     "Role": "Admin",
     "Ime": "David",
     "Priimek": "Majcen",
-    "Email": "david.majcen2@student.um.si"
+    "Email": "david.majcen2@student.um.si",
+    "Teza": null,
+    "Visina": null,
+    "DatumRojstva": null,
+    "Starost": null
   },
   {
     "Id": 2,
@@ -15,7 +19,11 @@
     "Role": "User",
     "Ime": null,
     "Priimek": null,
-    "Email": null
+    "Email": null,
+    "Teza": null,
+    "Visina": null,
+    "DatumRojstva": null,
+    "Starost": null
   },
   {
     "Id": 3,
@@ -24,6 +32,10 @@
     "Role": "User",
     "Ime": "David",
     "Priimek": "Majcen",
-    "Email": "Dmajcen@gmail.com"
+    "Email": "Dmajcen@gmail.com",
+    "Teza": 75,
+    "Visina": 178,
+    "DatumRojstva": "2005-09-24T00:00:00",
+    "Starost": 20
   }
 ]
