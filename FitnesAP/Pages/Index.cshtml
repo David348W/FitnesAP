@@ -1,10 +1,89 @@
 ﻿@page
+@using Microsoft.AspNetCore.Http
 @model IndexModel
 @{
     ViewData["Title"] = "Home page";
+    string username = HttpContext.Session.GetString("username");
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="text-center" margin-top: 100px;>
+    <h1 class="display-4">FitnesApp</h1>
+    <p>Aplikacija za beleženje treningov in spremljanja napredka</p>
+
+    @if (username == null)
+    {
+        <a class="btn btn-primary btn-lg mx-2" asp-area="Identity" asp-page="/Login">Login</a>
+        <a class="btn btn-primary btn-lg mx-2" asp-area="Identity" asp-page="/Register">Register</a>
+    }
+    else
+    {
+        <div class="mt-4">
+            <p class="lead">Pozdravljeni, @username!</p>        
+        </div>
+        <div class="container" style="margin-top: 50px;">
+
+            <h2 class="mb-4 text-center">Nadzorna plošča</h2>
+
+            <div class="row mb-4">
+                <div class="col-12">
+                    <a asp-page="/MyWorkouts" class="text-decoration-none">
+                        <div class="card text-white bg-danger mb-3 shadow-sm h-100">
+                            <div class="card-body text-center d-flex flex-column justify-content-center align-items-center p-5">
+                                <h2 class="card-title"><i class="bi bi-plus-circle"></i> Ustvari Nov Trening</h2>
+                                <p class="card-text">Začni beležiti nov trening tukaj.</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <div class="row">
+
+                <div class="col-md-6 mb-4">
+                    <a asp-page="/Exercises" class="text-decoration-none">
+                        <div class="card shadow-sm h-100 border-primary">
+                            <div class="card-body text-center p-4">
+                                <h4 class="card-title text-primary">Seznam Vaj</h4>
+                                <p class="card-text text-muted">Pregled in urejanje baze vaj.</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-md-6 mb-4">
+                    <a asp-page="/History" class="text-decoration-none">
+                        <div class="card shadow-sm h-100 border-primary">
+                            <div class="card-body text-center p-4">
+                                <h4 class="card-title text-primary">Zgodovina Treningov</h4>
+                                <p class="card-text text-muted">Pregled preteklih treningov.</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-md-6 mb-4">
+                    <a asp-page="/BodyStats" class="text-decoration-none">
+                        <div class="card shadow-sm h-100 border-primary">
+                            <div class="card-body text-center p-4">
+                                <h4 class="card-title text-primary">Telesne Meritve</h4>
+                                <p class="card-text text-muted">Spremljaj svojo težo in obseg.</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-md-6 mb-4">
+                    <a asp-page="/ExerciseProgress" class="text-decoration-none">
+                        <div class="card shadow-sm h-100 border-primary">
+                            <div class="card-body text-center p-4">
+                                <h4 class="card-title text-primary">Grafi Napredka</h4>
+                                <p class="card-text text-muted">Vizualni prikaz tvojega napredka.</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    }
 </div>
