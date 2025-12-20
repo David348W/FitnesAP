@@ -102,5 +102,57 @@
         ]
       }
     ]
+  },
+  {
+    "Id": 4,
+    "UserId": 3,
+    "Name": "Pullupi Progress",
+    "Date": "2025-12-20T13:35:47.5794971+01:00",
+    "StartTime": null,
+    "EndTime": "2025-12-20T13:35:52.7300481+01:00",
+    "Exercises": [
+      {
+        "ExerciseId": 1,
+        "Name": "Pull ups",
+        "Sets": [
+          {
+            "Id": 1,
+            "Weight": 80,
+            "Reps": 3
+          },
+          {
+            "Id": 2,
+            "Weight": 70,
+            "Reps": 6
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "Id": 5,
+    "UserId": 3,
+    "Name": "Pull Day deload",
+    "Date": "2025-12-20T14:10:38.4573783+01:00",
+    "StartTime": null,
+    "EndTime": "2025-12-20T14:10:44.2099888+01:00",
+    "Exercises": [
+      {
+        "ExerciseId": 1,
+        "Name": "Pull ups",
+        "Sets": [
+          {
+            "Id": 1,
+            "Weight": 30,
+            "Reps": 1
+          },
+          {
+            "Id": 2,
+            "Weight": 25,
+            "Reps": 5
+          }
+        ]
+      }
+    ]
   }
 ]

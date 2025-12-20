@@ -1,0 +1,124 @@
+﻿@page
+@model FitnesAP.Pages.ExerciseProgressModel
+@{
+    ViewData["Title"] = "Napredek pri vajah";
+}
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<div class="container mt-4">
+    <h2 class="mb-4">📈 Napredek pri Vajah</h2>
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <form method="post" class="row g-3 align-items-end">
+                <div class="col-md-8">
+                    <label class="form-label fw-bold">Izberi vajo</label>
+                    <select class="form-select" asp-for="SelectedExerciseID">
+                        <option value="">-- Izberi vajo s seznama --</option>
+                        @foreach (var exercise in Model.AllExercises)
+                        {
+                            <option value="@exercise.Id">@exercise.Ime</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <button type="submit" class="btn btn-primary w-100">Prikaži Napredek</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    @if (Model.SelectedExerciseID.HasValue && Model.SelectedExercise != null)
+    {
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <div class="card shadow-sm h-100">
+                    @if (!string.IsNullOrEmpty(Model.SelectedExercise.SlikaUrl))
+                    {
+                        <img src="@Model.SelectedExercise.SlikaUrl" class="card-img-top" alt="@Model.SelectedExercise.Ime" style="max-height: 200px; object-fit: cover;">
+                    }
+                    else
+                    {
+                        <div class="bg-light text-center py-5 text-muted">Ni slike</div>
+                    }
+
+                    <div class="card-body">
+                        <h4 class="card-title">@Model.SelectedExercise.Ime</h4>
+                        <p class="card-text text-muted">
+                            Sledi svojemu napredku dviganja teže pri tej vaji skozi čas.
+                        </p>
+                        @if (!string.IsNullOrEmpty(Model.SelectedExercise.VideoUrl))
+                        {
+                            <a href="@Model.SelectedExercise.VideoUrl" target="_blank" class="btn btn-outline-danger btn-sm w-100">📺 Poglej Video</a>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-8 mb-3">
+                <div class="card shadow-sm h-100">
+                    <div class="card-header bg-white">
+                        <h5 class="m-0 text-primary">Zgodovina Teže (Max Lift)</h5>
+                    </div>
+                    <div class="card-body">
+                        @if (Model.ImaPodatke)
+                        {
+                            <canvas id="exerciseChart"></canvas>
+                        }
+                        else
+                        {
+                            <div class="alert alert-warning text-center mt-4">
+                                <strong>Ni podatkov!</strong> <br />
+                                To vajo še nisi izvajal ali pa nisi vpisal teže.
+                                <br />
+                                <a asp-page="/CreateWorkout" class="btn btn-sm btn-outline-dark mt-2">Ustvari Trening</a>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@if (Model.ImaPodatke)
+{
+    <script>
+        var ctx = document.getElementById('exerciseChart').getContext('2d');
+        var exerciseChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: @Html.Raw(Model.ChartLabelsJson),
+                datasets: [{
+                    label: 'Največja teža (kg)',
+                    data: @Html.Raw(Model.ChartDataJson),
+                    borderColor: '#28a745', // Zelena barva
+                    backgroundColor: 'rgba(40, 167, 69, 0.1)',
+                    borderWidth: 2,
+                    tension: 0.3,
+                    fill: true,
+                    pointRadius: 5,
+                    pointHoverRadius: 7
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: false,
+                        title: {
+                            display: true,
+                            text: 'Kilogrami (kg)'
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: true
+                    }
+                }
+            }
+        });
+    </script>
+}
