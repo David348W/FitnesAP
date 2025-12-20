@@ -7,10 +7,10 @@
     "Ime": "David",
     "Priimek": "Majcen",
     "Email": "david.majcen2@student.um.si",
-    "Teza": null,
-    "Visina": null,
-    "DatumRojstva": null,
-    "Starost": null
+    "Teza": 95,
+    "Visina": 200,
+    "DatumRojstva": "2013-02-20T00:00:00",
+    "Starost": 12
   },
   {
     "Id": 2,
@@ -32,8 +32,8 @@
     "Role": "User",
     "Ime": "David",
     "Priimek": "Majcen",
-    "Email": "Dmajcen@gmail.com",
-    "Teza": 75,
+    "Email": "david.majcen2@student.um.si",
+    "Teza": 73,
     "Visina": 178,
     "DatumRojstva": "2005-09-24T00:00:00",
     "Starost": 20

@@ -12,6 +12,7 @@ builder.Services.AddSession(options =>
 builder.Services.AddSingleton<FitnesAP.Data.UserService>();
 builder.Services.AddScoped<FitnesAP.Data.ExerciseService>();
 builder.Services.AddScoped<FitnesAP.data.WorkoutService>();
+builder.Services.AddScoped<FitnesAP.data.WeightHistoryService>();
 var app = builder.Build();
 
 app.UseHttpsRedirection();

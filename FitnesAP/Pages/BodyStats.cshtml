@@ -56,3 +56,40 @@
         </div>
     </div>
 </div>
+<canvas id="weightChart"></canvas>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    var labels = @Html.Raw(Model.ChartLabelsJson);
+    var dataPoints = @Html.Raw(Model.ChartDataJson);
+
+    if (labels && labels.length > 0) {
+        var ctx = document.getElementById('weightChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'line', 
+            data: {
+                labels: labels, 
+                datasets: [{
+                    label: 'Teža (kg)',
+                    data: dataPoints, 
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    backgroundColor: 'rgba(54, 162, 235, 0.1)', 
+                    borderWidth: 2,
+                    tension: 0.3, 
+                    pointRadius: 4,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: false 
+                    }
+                }
+            }
+        });
+    } else {
+    
+        document.getElementById('weightChart').replaceWith("Ni dovolj podatkov za prikaz grafa.");
+    }
+</script>
