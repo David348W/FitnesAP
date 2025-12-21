@@ -167,6 +167,46 @@ namespace FitnesAp_Tests
             Assert.AreEqual(1, zgodovina.Count, "Zgodovina mora pokazati samo 1 trening.");
             Assert.AreEqual("Končan", zgodovina[0].Name);
         }
+
+        [TestMethod]
+        public void GetCompletedWorkoutsCount_StejeSamoZakljuceneTreninge() //test za stetje treningov
+        {
+            // 1. ARRANGE (Priprava podatkov)
+            int userId = 10; // Izmislimo si nek ID uporabnika
+
+            // A) Dodamo trening, ki je KONČAN (ima EndTime)
+            _service.AddWorkout(new Workout
+            {
+                UserId = userId,
+                Name = "Trening 1 (Končan)",
+                StartTime = DateTime.Now.AddHours(-2),
+                EndTime = DateTime.Now.AddHours(-1) // <--- IMA END TIME
+            });
+
+            // B) Dodamo trening, ki je V TEKU (nima EndTime)
+            _service.AddWorkout(new Workout
+            {
+                UserId = userId,
+                Name = "Trening 2 (V teku)",
+                StartTime = DateTime.Now,
+                EndTime = null // <--- NIMA END TIME (ne sme ga šteti)
+            });
+
+            // C) Dodamo še en končan trening
+            _service.AddWorkout(new Workout
+            {
+                UserId = userId,
+                Name = "Trening 3 (Končan)",
+                EndTime = DateTime.Now
+            });
+
+            // 2. ACT (Izvedba metode, ki jo testiramo)
+            int rezultat = _service.GetCompletedWorkoutsCount(userId);
+
+            // 3. ASSERT (Preverjanje rezultata)
+            // Pričakujemo številko 2 (ker sta samo dva treninga končana)
+            Assert.AreEqual(2, rezultat, "Števec mora prešteti samo tiste treninge, ki imajo datum zaključka.");
+        }
     }
 }
     

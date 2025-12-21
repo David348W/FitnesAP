@@ -107,6 +107,28 @@
     </div>
 </form>
 
+<div class="modal fade" id="exitWarningModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-warning">
+                <h5 class="modal-title text-dark">⚠️ Trening še ni zaključen</h5>
+            </div>
+            <div class="modal-body">
+                <p>Ali res želite zapustiti stran? Če odidete zdaj, se trening ne bo shranil.</p>
+                <p class="fw-bold">Želite končati trening in shraniti podatke ali nadaljevati?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    Nadaljuj s treningom
+                </button>
+
+                <button type="button" class="btn btn-primary" onclick="forceFinishWorkout()">
+                    ✔ Končaj in Shrani
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 <script>
     // Preberemo začetek in konec
     var startTimeString = "@Model.CurrentWorkout.StartTime?.ToString("yyyy-MM-ddTHH:mm:ss")";
@@ -156,5 +178,58 @@
     // Interval (tiktakanje) zaženemo SAMO, če trening NI končan (nima EndTime)
     if (startTimeString && !endTimeString) {
         setInterval(updateTimer, 1000);
+    }
+
+    // Spremenljivka, ki pove, ali smemo varno zapustiti stran (npr. ko kliknemo Zaključi)
+    var isSafeToLeave = false;
+
+    // Ali je trening aktiven? (Ima start time, nima pa end time)
+    var isWorkoutActive = startTimeString && !endTimeString;
+
+    // 1. Prestrezanje klika na gumb "Zaključi" (da ne teži, če dejansko želimo končati)
+    // Poiščemo tvoj glavni gumb za zaključek (če ga imaš v formi)
+    document.querySelector('form').addEventListener('submit', function() {
+        isSafeToLeave = true;
+    });
+
+    // 2. Prestrezanje sistemskega zapiranja (Gumb X na brskalniku)
+    window.addEventListener('beforeunload', function (e) {
+        if (isWorkoutActive && !isSafeToLeave) {
+            // To sproži standardno brskalnikovo opozorilo
+            // (Na žalost tu ne moremo spremeniti teksta zaradi varnosti brskalnikov)
+            e.preventDefault();
+            e.returnValue = '';
+        }
+    });
+
+    // 3. Prestrezanje navigacije znotraj strani (Klik na linke)
+    document.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', function(e) {
+            if (isWorkoutActive && !isSafeToLeave) {
+                // Prepreči takojšen odhod
+                e.preventDefault();
+
+                // Prikaži naš lep Bootstrap Modal
+                var myModal = new bootstrap.Modal(document.getElementById('exitWarningModal'));
+                myModal.show();
+            }
+        });
+    });
+
+    // 4. Funkcija za gumb "Končaj" v modalu
+    function forceFinishWorkout() {
+        isSafeToLeave = true;
+        // Programsko kliknemo pravi gumb "Zaključi" na strani, da se izvede OnPost
+        // Predvidevam, da je tvoj gumb za zaključek tipa submit in je edini/prvi submit gumb
+        // Če imaš gumb specifičen razred, uporabi: document.querySelector('.btn-success').click();
+
+        // Iskanje gumba za zaključek (glede na tvojo prejšnjo kodo je bil btn-success)
+        var finishBtn = document.querySelector('.btn-success');
+        if(finishBtn) {
+            finishBtn.click();
+        } else {
+            // Fallback, če gumba ne najde (submitamo formo ročno)
+            document.forms[0].submit();
+        }
     }
 </script>

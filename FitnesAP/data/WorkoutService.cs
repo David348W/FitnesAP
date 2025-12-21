@@ -99,5 +99,11 @@ namespace FitnesAP.data
             var workouts = JsonSerializer.Deserialize<List<Workout>>(json) ?? new List<Workout>();
             return workouts.FirstOrDefault(w => w.Id == id);
         }
+
+        public int GetCompletedWorkoutsCount(int userId)
+        {
+            // Vrnemo število treningov, ki pripadajo uporabniku in imajo nastavljen EndTime (so končani)
+            return GetWorkoutsForUser(userId).Count(w => w.EndTime != null);
+        }
     }
 }

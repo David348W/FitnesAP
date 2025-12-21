@@ -54,6 +54,7 @@ namespace FitnesAP.Pages
 
                 // 5. Shranimo v JSON
                 _workoutService.UpdateWorkout(dbWorkout);
+                TempData["Sporocilo"] = "Trening uspešno shranjen!";
 
                 // Posodobimo model za prikaz, da bo JavaScript takoj videl spremembo
                 CurrentWorkout = dbWorkout;
