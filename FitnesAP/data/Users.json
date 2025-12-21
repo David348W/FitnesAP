@@ -32,10 +32,10 @@
     "Role": "User",
     "Ime": "David",
     "Priimek": "Majcen",
-    "Email": "david.majcen2@student.um.si",
-    "Teza": 73,
-    "Visina": 178,
-    "DatumRojstva": "2005-09-24T00:00:00",
-    "Starost": 20
+    "Email": "david.ajcen2@student.um.si",
+    "Teza": null,
+    "Visina": null,
+    "DatumRojstva": null,
+    "Starost": null
   }
 ]

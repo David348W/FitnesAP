@@ -1,0 +1,80 @@
+﻿@page
+@model FitnesAP.Pages.MyExercisesModel
+@{
+    ViewData["Title"] = "Moje Vaje";
+}
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Moje Osebne Vaje</h2>
+        <a asp-page="/Exercises" class="btn btn-outline-secondary">Nazaj na vse vaje</a>
+    </div>
+
+    <div class="card mb-5 border-success">
+        <div class="card-header bg-success text-white">
+            <i class="bi bi-plus-circle"></i> Ustvari svojo vajo po meri
+        </div>
+        <div class="card-body">
+            <form method="post" enctype="multipart/form-data">
+                <div class="row">
+                    <div class="col-md-3 mb-2">
+                        <label>Ime vaje</label>
+                        <input asp-for="NovaVaja.Ime" class="form-control" required placeholder="npr. Moj specifičen dvig" />
+                    </div>
+
+                    <div class="col-md-3 mb-2">
+                        <label>Naloži Sliko</label>
+                        <input type="file" asp-for="SlikaUpload" class="form-control" accept="image/*" />
+                    </div>
+
+                    <div class="col-md-3 mb-2">
+                        <label>Video (Youtube URL)</label>
+                        <input asp-for="NovaVaja.VideoUrl" class="form-control" placeholder="URL..." />
+                    </div>
+
+                    <div class="col-md-3 mb-2 d-flex align-items-end">
+                        <button type="submit" class="btn btn-success w-100">Shrani Mojo Vajo</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    @if (Model.MojeVaje.Count == 0)
+    {
+        <div class="alert alert-info">Še nimate svojih vaj. Dodajte prvo zgoraj!</div>
+    }
+    else
+    {
+        <div class="row">
+            @foreach (var vaja in Model.MojeVaje)
+            {
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 shadow-sm border-success">
+                        @if (!string.IsNullOrEmpty(vaja.SlikaUrl))
+                        {
+                            <img src="@vaja.SlikaUrl" class="card-img-top" alt="@vaja.Ime" style="height: 200px; object-fit: cover;">
+                        }
+                        else
+                        {
+                            <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
+                                <span class="text-muted">Ni slike</span>
+                            </div>
+                        }
+
+                        <div class="card-body">
+                            <h5 class="card-title">@vaja.Ime</h5>
+                            <span class="badge bg-success mb-2">Moja vaja</span>
+                            @if (!string.IsNullOrEmpty(vaja.VideoUrl))
+                            {
+                                <div class="mt-2">
+                                    <a href="@vaja.VideoUrl" target="_blank" class="btn btn-outline-danger btn-sm">▶ Video</a>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>

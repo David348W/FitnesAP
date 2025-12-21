@@ -30,9 +30,10 @@ namespace FitnesAP.Pages
 
         public void OnGet()
         {
-            VseVaje = _exerciseService.GetExercises();
-
             var username = HttpContext.Session.GetString("username");
+            var vseVajeIzBaze = _exerciseService.GetExercises();
+            VseVaje = vseVajeIzBaze.Where(e => string.IsNullOrEmpty(e.CreatedBy) || e.CreatedBy == username).ToList();
+           
             if (!string.IsNullOrEmpty(username))
             {
                 var user = _userService.GetUserByUsername(username);

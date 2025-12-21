@@ -34,6 +34,7 @@
         <div class="mb-3">
             <label>Email</label>
             <input type="email" class="form-control" asp-for="TrenutniUser.Email" />
+            <span asp-validation-for="TrenutniUser.Email" class="text-danger"></span>
         </div>
 
         <button type="submit" class="btn btn-primary">Shrani</button>

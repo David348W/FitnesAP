@@ -154,5 +154,47 @@
         ]
       }
     ]
+  },
+  {
+    "Id": 6,
+    "UserId": 3,
+    "Name": "Insane Chest Day",
+    "Date": "2025-12-21T14:47:38.6362114+01:00",
+    "StartTime": null,
+    "EndTime": "2025-12-21T14:47:54.1232847+01:00",
+    "Exercises": [
+      {
+        "ExerciseId": 2,
+        "Name": "Bench Press",
+        "Sets": [
+          {
+            "Id": 1,
+            "Weight": 100,
+            "Reps": 5
+          },
+          {
+            "Id": 2,
+            "Weight": 100,
+            "Reps": 4
+          },
+          {
+            "Id": 3,
+            "Weight": 100,
+            "Reps": 1
+          }
+        ]
+      },
+      {
+        "ExerciseId": 4,
+        "Name": "Backshots",
+        "Sets": [
+          {
+            "Id": 1,
+            "Weight": 75,
+            "Reps": 14
+          }
+        ]
+      }
+    ]
   }
 ]

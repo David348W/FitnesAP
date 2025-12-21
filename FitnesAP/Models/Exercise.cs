@@ -6,6 +6,7 @@
         public string Ime { get; set; }
         public string SlikaUrl { get; set; } 
         public string VideoUrl { get; set; } 
-        public string? Opis { get; set; }     
+        public string? Opis { get; set; }
+        public string? CreatedBy { get; set; }
     }
 }

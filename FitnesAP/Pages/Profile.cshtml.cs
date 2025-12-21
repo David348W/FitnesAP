@@ -34,6 +34,13 @@ namespace FitnesAP.Pages
         {
             if (!ModelState.IsValid) return Page();
 
+            var vsiUporabniki = _userService.GetUsers();
+            bool emailJeZaseden = vsiUporabniki.Any(u => u.Email != null && u.Email.ToLower() == TrenutniUser.Email.ToLower() && u.Id != TrenutniUser.Id);
+            if (emailJeZaseden)
+            {
+                ModelState.AddModelError("TrenutniUser.Email", "Napaka, Email je že v uporabi");
+                return Page();
+            }
             _userService.UpdateUser(TrenutniUser);
             Sporocilo = "Podatki uspešno posodobljeni!";
 

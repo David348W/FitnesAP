@@ -38,10 +38,13 @@ namespace FitnesAP.Pages
             if (user == null) return RedirectToPage("/Login");
 
             int userId = user.Id;
+            var vseVaje = _exerciseService.GetExercises();
+            AllExercises = vseVaje.Where(e =>
+                string.IsNullOrEmpty(e.CreatedBy) ||
+                e.CreatedBy == username
+            ).ToList();
 
-            AllExercises = _exerciseService.GetExercises();
-
-            if(SelectedExerciseID.HasValue)
+            if (SelectedExerciseID.HasValue)
             {
                 SelectedExercise = AllExercises.FirstOrDefault(x => x.Id == SelectedExerciseID.Value);
                 if(SelectedExercise != null)

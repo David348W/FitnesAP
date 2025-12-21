@@ -4,11 +4,14 @@
 @{
 
     ViewData["Title"] = "Vaje";
+    var username = HttpContext.Session.GetString("username");
 }
 
 <div class="container mt-4">
     <h2 class="mb-4">Seznam vseh vaj</h2>
-
+    <a asp-page="/MyExercises" class="btn btn-primary">
+        <i class="bi bi-person-lines-fill"></i> Upravljaj Moje Vaje
+    </a>
     @if (Model.IsAdmin)
     {
         <div class="card mb-5 border-primary">
@@ -60,6 +63,11 @@
 
                     <div class="card-body">
                         <h5 class="card-title">@vaja.Ime</h5>
+                        
+                        @if(vaja.CreatedBy == username)
+                        {
+                            <span class="badge bg-success mb-2">Moja vaja</span>
+                        }                     
                         @if (!string.IsNullOrEmpty(vaja.VideoUrl))
                         {
                             <a href="@vaja.VideoUrl" target="_blank" class="btn btn-outline-danger btn-sm">▶ Poglej Video</a>

@@ -29,6 +29,10 @@
                                 <input class="form-check-input" type="checkbox" name="SelectedExerciseIds" value="@vaja.Id" id="vaja_@vaja.Id">
                                 <label class="form-check-label" for="vaja_@vaja.Id">
                                     <strong>@vaja.Ime</strong>
+                                    @if (!string.IsNullOrEmpty(vaja.CreatedBy))
+                                    {
+                                        <span class="badge bg-success ms-2" style="font-size: 0.7em;">Moja</span>
+                                    }
                                 </label>
                             </div>
                         </div>

@@ -30,9 +30,12 @@ namespace FitnesAP.Pages
         public IActionResult OnGet()
         {
             var username = HttpContext.Session.GetString("username");
-            if (string.IsNullOrEmpty(username)) return RedirectToPage("/Login");
-
-            AllExercises = _exerciseService.GetExercises();
+            var vseVaje = _exerciseService.GetExercises();
+            AllExercises = vseVaje.Where(e =>
+                string.IsNullOrEmpty(e.CreatedBy) ||
+                e.CreatedBy == username
+            ).ToList();
+            if (string.IsNullOrEmpty(username)) return RedirectToPage("/Login");         
             return Page();
         }
 
