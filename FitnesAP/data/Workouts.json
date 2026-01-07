@@ -156,27 +156,6 @@
     ]
   },
   {
-    "Id": 6,
-    "UserId": 3,
-    "Name": "i h8 leg day",
-    "Date": "2025-12-21T19:40:05.3090465+01:00",
-    "StartTime": null,
-    "EndTime": "2025-12-21T19:40:06.8175291+01:00",
-    "Exercises": [
-      {
-        "ExerciseId": 4,
-        "Name": "Backshots",
-        "Sets": [
-          {
-            "Id": 1,
-            "Weight": 5,
-            "Reps": 5
-          }
-        ]
-      }
-    ]
-  },
-  {
     "Id": 7,
     "UserId": 3,
     "Name": "js se david in sem bum",

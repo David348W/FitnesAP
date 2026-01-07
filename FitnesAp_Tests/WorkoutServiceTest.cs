@@ -171,19 +171,19 @@ namespace FitnesAp_Tests
         [TestMethod]
         public void GetCompletedWorkoutsCount_StejeSamoZakljuceneTreninge() //test za stetje treningov
         {
-            // 1. ARRANGE (Priprava podatkov)
-            int userId = 10; // Izmislimo si nek ID uporabnika
+            
+            int userId = 10; 
 
-            // A) Dodamo trening, ki je KONČAN (ima EndTime)
+            
             _service.AddWorkout(new Workout
             {
                 UserId = userId,
                 Name = "Trening 1 (Končan)",
                 StartTime = DateTime.Now.AddHours(-2),
-                EndTime = DateTime.Now.AddHours(-1) // <--- IMA END TIME
+                EndTime = DateTime.Now.AddHours(-1) 
             });
 
-            // B) Dodamo trening, ki je V TEKU (nima EndTime)
+           
             _service.AddWorkout(new Workout
             {
                 UserId = userId,
@@ -192,7 +192,7 @@ namespace FitnesAp_Tests
                 EndTime = null // <--- NIMA END TIME (ne sme ga šteti)
             });
 
-            // C) Dodamo še en končan trening
+      
             _service.AddWorkout(new Workout
             {
                 UserId = userId,
@@ -200,11 +200,10 @@ namespace FitnesAp_Tests
                 EndTime = DateTime.Now
             });
 
-            // 2. ACT (Izvedba metode, ki jo testiramo)
+           
             int rezultat = _service.GetCompletedWorkoutsCount(userId);
 
-            // 3. ASSERT (Preverjanje rezultata)
-            // Pričakujemo številko 2 (ker sta samo dva treninga končana)
+            
             Assert.AreEqual(2, rezultat, "Števec mora prešteti samo tiste treninge, ki imajo datum zaključka.");
         }
     }
